@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="app.min.css">
+    <style>
+       
+       .color-pickers li{
+        text-decoration: none;
+        display: inline-block;
+        width: 20%;
+        height: 50px;
+        position: relative;
+        border-radius: 5%;
+     
+       }
+
+       .color-pickers li[data-color='red']{
+          background-color: red;  
+       }
+        .color-pickers li[data-color='yellow']{
+          background-color: yellow;  
+       }
+        .color-pickers li[data-color='green']{
+          background-color: green;  
+       }
+        .color-pickers li[data-color='blue']{
+          background-color: blue;  
+       }
+       .color-pickers li[data-color='grey']{
+          background-color: grey;  
+       }
+        .color-pickers li[data-color='black']{
+          background-color: black;  
+       }
+        .color-pickers li[data-color='orange']{
+          background-color: orange;  
+       }
+        .color-pickers li[data-color='sea']{
+          background-color: #00FFFF;  
+       }
+
+
+
+
+    </style>
+  </head>
+
+  <body>
+    <div class="app-page" data-page="home">
+      <div class="app-topbar">
+        <div class="app-title">Main page</div>
+      </div>
+      <div class="app-content">
+       <div class="app-section">
+        <p style="text-align:center;"><b>Hello visiters</b></p> 
+       </div>
+
+       <div class="app-section">
+        <h4>Pick any color</h4>
+        <ul class="color-pickers">
+          <li data-color='red'></li>
+          <li data-color='yellow'></li>
+          <li data-color='green'></li>
+          <li data-color='blue'></li>
+          <li data-color='grey'></li>
+          <li data-color='black'></li>
+          <li data-color='orange'></li>
+          <li data-color='sea'></li>
+          <div class="clear"></div>
+        </ul>
+         
+       </div>
+
+        <div class="app-section">
+          <div class="app-button" data-target="page2">Go to Page 2</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-page" data-page="page2">
+      <div class="app-topbar">
+        <div class="app-button left" data-back></div>
+        <div class="app-title">Page 2</div>
+      </div>
+      <div class="app-content">
+        Page 2 is lonely
+      </div>
+    </div>
+
+    <script src="zepto.js"></script>
+    <script src="app.min.js"></script>
+    <script>
+
+        var oldColor = "" ;
+
+       function changeTheme(page){
+        $(page).find('.color-pickers li').clickable().on('click' , function(){
+
+          var color = $(this).data('color');
+          if(oldColor!=""){
+            $('.app-topbar').removeClass(oldColor) ;
+          }
+
+          $('.app-topbar').addClass(color); 
+          oldColor = color ;
+
+        });
+       } 
+
+
+
+      App.controller('home', function (page) {
+           changeTheme(page);
+      });
+
+      App.controller('page2', function (page) {
+        changeTheme(page);
+      });
+
+      try {
+        App.restore();
+      } catch (err) {
+        App.load('home');
+      }
+    </script>
+  </body>
+</html>
