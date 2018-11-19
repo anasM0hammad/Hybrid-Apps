@@ -50,7 +50,7 @@
   <body>
     <div class="app-page" data-page="home">
       <div class="app-topbar">
-        <div class="app-title">Main page</div>
+        <div class="app-title">Home</div>
       </div>
       <div class="app-content">
        <div class="app-section">
@@ -74,23 +74,24 @@
        </div>
 
         <div class="app-section">
-          <div class="app-button" data-target="page2">Go to Page 2</div>
+          <div class="app-button" data-target="viewer">Photo Viewer</div>
         </div>
       </div>
     </div>
 
-    <div class="app-page" data-page="page2">
+    <div class="app-page dark-page" data-page="viewer">
       <div class="app-topbar">
-        <div class="app-button left" data-back></div>
-        <div class="app-title">Page 2</div>
+        <div class="app-button left" data-back data-autotitle></div>
+        <div class="app-title">Photo Viewer</div>
       </div>
       <div class="app-content">
-        Page 2 is lonely
+        
       </div>
     </div>
 
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
+    <script src="http://cdn.kik.com/photo-viewer/1/photo-viewer.js"></script>
     <script>
 
         var oldColor = "" ;
@@ -115,8 +116,8 @@
            changeTheme(page);
       });
 
-      App.controller('page2', function (page) {
-        changeTheme(page);
+      App.controller('viewer', function (page) {
+        changeTheme(viewer);
       });
 
       try {
@@ -124,6 +125,25 @@
       } catch (err) {
         App.load('home');
       }
+
+
+    App.controller('viewer', function (page, data) {
+      var photoViewer = new PhotoViewer(page, data.urls);
+
+    });
+
+    App.load('viewer' , {
+       urls: [
+      'anas.jpg',
+      'admin1122.jpg',
+      'areesha.jpg',
+      'zain.jpg',
+      'anas.jpg'
+       ]
+
+    });
+
+
     </script>
   </body>
 </html>
