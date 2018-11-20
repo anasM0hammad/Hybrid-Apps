@@ -72,22 +72,10 @@
         </ul>
          
        </div>
-
-        <div class="app-section">
-          <div class="app-button" data-target="viewer">Photo Viewer</div>
-        </div>
       </div>
     </div>
 
-    <div class="app-page dark-page" data-page="viewer">
-      <div class="app-topbar">
-        <div class="app-button left" data-back data-autotitle></div>
-        <div class="app-title">Photo Viewer</div>
-      </div>
-      <div class="app-content">
-        
-      </div>
-    </div>
+    
 
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
@@ -116,10 +104,6 @@
            changeTheme(page);
       });
 
-      App.controller('viewer', function (page) {
-        changeTheme(viewer);
-      });
-
       try {
         App.restore();
       } catch (err) {
@@ -127,21 +111,17 @@
       }
 
 
-    App.controller('viewer', function (page, data) {
-      var photoViewer = new PhotoViewer(page, data.urls);
+   
 
-    });
 
-    App.load('viewer' , {
-       urls: [
-      'anas.jpg',
-      'admin1122.jpg',
-      'areesha.jpg',
-      'zain.jpg',
-      'anas.jpg'
-       ]
+    //PERMANENT STORAGE
+  // localStorage.setItem('name' , 'anas');
+   
+   var name = [];
+   name[0] = prompt("Enter the name");
+   localStorage.setItem('name' , JSON.stringify(name));
 
-    });
+   alert(JSON.parse(localStorage.getItem('name')));
 
 
     </script>
