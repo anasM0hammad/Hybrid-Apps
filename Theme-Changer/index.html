@@ -3,6 +3,7 @@
   <head>
     <title>My App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="app.min.css">
     <style>
        
@@ -41,6 +42,18 @@
           background-color: #00FFFF;  
        }
 
+       .home{
+        background-image: url('background.jpg');
+        background-position: center;
+        background-size: cover;
+       }
+
+       .home_button{
+        background-color: #DD4539 ;
+        color: white;
+
+       }
+
 
 
 
@@ -48,9 +61,27 @@
   </head>
 
   <body>
-    <div class="app-page" data-page="home">
+
+     <div class="app-page" data-page="home">
+       <!-- <div class="app-topbar">
+        <div class="app-title">Welcome</div>
+      </div> -->
+      <div class="app-content home ">
+        <br>
+     
+       <h2 style="color: white; text-align: center;"><b><i>Theme Changer</i></b></h2>
+
+       <br><br>
+       <button type="button" class="btn app-button mx-auto d-block" data-target='main' style="background-color: #DD4539; color: white; margin-top: 30px;"><b>Welcome</b></button>
+      
+      </div>
+    </div>
+
+
+    <div class="app-page" data-page="main">
       <div class="app-topbar">
         <div class="app-title">Home</div>
+        <div class="app-button left" data-back></div>
       </div>
       <div class="app-content">
        <div class="app-section">
@@ -79,7 +110,6 @@
 
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
-    <script src="http://cdn.kik.com/photo-viewer/1/photo-viewer.js"></script>
     <script>
 
         var oldColor = "" ;
@@ -100,7 +130,7 @@
 
 
 
-      App.controller('home', function (page) {
+      App.controller('main', function (page) {
            changeTheme(page);
       });
 
@@ -116,12 +146,7 @@
 
     //PERMANENT STORAGE
   // localStorage.setItem('name' , 'anas');
-   
-   var name = [];
-   name[0] = prompt("Enter the name");
-   localStorage.setItem('name' , JSON.stringify(name));
-
-   alert(JSON.parse(localStorage.getItem('name')));
+  
 
 
     </script>
