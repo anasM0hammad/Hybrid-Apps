@@ -4,6 +4,7 @@
     <title>My App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="app.min.css">
+   
     <style>
      
     </style>
@@ -17,13 +18,17 @@
       </div>
       <div class="app-content">
         <div class="app-section">
-          <p style="color:#6b7477; "><i>Save your message and send to their mail anytime you want</i></p>
+          <p style="color:#6b7477; "><i><b>Save your messages and send them anytime you want</b></i></p>
         </div>
         <div class="app-section">
           <div class="app-button green" data-target="sendemail">List of user</div>
         </div>
          <div class="app-section">
           <div class="app-button blue" data-target="sendemail">Select a new User</div>
+        </div>
+
+         <div class="app-section">
+          <div class="app-button red" data-target="enteremail">Submit email Address</div>
         </div>
       </div>
     </div>
@@ -40,14 +45,38 @@
       <div class="app-content">
 
         <div class="app-section">
-          <input class="app-input" placeholder="Input">
+          <input class="app-input" type="email" id='recipient-email' placeholder="Recipient's Email">
         </div>
 
         <form class="app-section">
           <input class="app-input" name="subject" placeholder="Subject">
           <textarea class="app-input" name="message" placeholder="Message"></textarea>
-          <div class="app-button green app-submit">Send Email</div>
+          <div class="app-button green app-submit" id='send'>Send Email</div>
         </form>
+      </div>
+    </div>
+
+
+    <!--ENTER EMAIL FORM-->
+     <div class="app-page" data-page="enteremail">
+      <div class="app-topbar">
+        <div class="app-title">Submit Email</div>
+        <div class="left app-button" data-back>Back</div>
+      </div>
+
+      <div class="app-content">
+
+        <div class="app-section">
+          <h4 style="text-align: center;"><i>Save Your Email here </i></h4>
+        </div>
+
+        <div class="app-section">
+          <input class="app-input" type="email" id='recipient-email' placeholder="Recipient's Email">
+        </div>
+
+        <div class="app-section">
+          <div class="app-button blue">Save</div>
+        </div>
       </div>
     </div>
 
@@ -55,12 +84,15 @@
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
-      App.controller('main', function (page) {
+      App.controller('home', function (page) {
         // put stuff here
       });
 
-      App.controller('home', function (page) {
-        // put stuff here
+      App.controller('sendemail', function (page) {
+        $(page).find('#send').clickable().on('click' , function(){
+           alert('clicked');
+        });
+
       });
 
       try {
