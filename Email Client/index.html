@@ -46,12 +46,16 @@
       <div class="app-content">
 
         <div class="app-section">
+          <h4 style="text-align: center; color: blue;" id='success_msg'><b>Email Send Successfully</b></h4>
+        </div>
+
+        <div class="app-section">
           <input class="app-input" type="email" id='recipient-email' placeholder="Recipient's Email">
         </div>
 
         <form class="app-section">
-          <input class="app-input" name="subject" placeholder="Subject">
-          <textarea class="app-input" name="message" placeholder="Message"></textarea>
+          <input class="app-input" name="subject" id='subject' placeholder="Subject">
+          <textarea class="app-input" id='message' name="message" placeholder="Message"></textarea>
           <div class="app-button green app-submit" id='send'>Send Email</div>
         </form>
       </div>
@@ -139,10 +143,48 @@
       App.controller('sendemail', function (page) {
 
 
+          $(page).find('#success_msg').hide();
 
          if(localStorage.getItem('recipient_email') !== null){
            $(page).find('#recipient-email').val(localStorage.getItem('recipient_email')); 
           }
+
+
+          //AJAX
+          var subject = $(page).find('#subject').val();
+          var message = $(page).find('#message').val();
+          var to = $(page).find('#recipient-email').val();
+          var from = localStorage.getItem('sender_email');
+
+          const sendEmail = async (to , from , message , subject)=>{
+
+           const call = await fetch(`send_mail.php?from=${from}&to=${to}&message=${message}&subject=${subject}`);
+
+           const data = await call.json();
+
+           return {data} 
+
+          };
+
+          const confirmMail = ()=>{
+
+           sendEmail(to , from , message , subject).then((result)=>{
+             
+             if(result.data == 'success'){
+               $(page).find('#success_msg').textContent = 'Email Sent Successfully';
+               $(page).find('#success_msg').show();
+               }
+            else{
+               $(page).find('#success_msg').textContent = 'Email Not Send';
+               $(page).find('#success_msg').show();
+            }
+
+            console.log(result);
+
+       }).catch(error => console.log(error))
+
+          };
+
 
 
         $(page).find('#send').clickable().on('click' , function(){
@@ -160,6 +202,9 @@
             localStorage.setItem('recipient_list', JSON.stringify(recipientList));
           
           }
+
+           confirmMail();
+
 
         });
 
