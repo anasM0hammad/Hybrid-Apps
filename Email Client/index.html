@@ -39,7 +39,7 @@
     <div class="app-page" data-page="sendemail">
       <div class="app-topbar">
         <div class="app-title"><b><i>Email Details</i></b></div>
-        <div class="right app-button" data-back>Done</div>
+        <div class="right app-button" data-back>Save</div>
         <div class="right app-button left" data-back >Back</div>
       </div>
 
@@ -76,7 +76,7 @@
         </div>
 
         <div class="app-section">
-          <div class="app-button blue" id='save_email'>Save</div>
+          <div class="app-button blue" id='save_email' data-back>Save</div>
         </div>
       </div>
     </div>
@@ -123,6 +123,10 @@
         
       });
 
+
+
+
+
       App.controller('sendemail', function (page) {
 
 
@@ -132,7 +136,18 @@
 
       });
 
+
+
+
+
+
+
        App.controller('enteremail', function (page) {
+
+        if(localStorage.getItem('sender_email') !== null){
+            $(page).find('#your_email').val(localStorage.getItem('sender_email')) ;
+           }
+
         
         $(page).find('#save_email').clickable().on('click', function(){
          
@@ -144,10 +159,6 @@
             alert('Your Email is saved');
            }
 
-
-           if(localStorage.getItem('sender_email') !== null){
-            $('#sender_email').val(localStorage.getItem('sender_email'));
-           }
 
         });
 
