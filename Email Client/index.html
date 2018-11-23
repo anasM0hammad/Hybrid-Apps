@@ -21,7 +21,7 @@
           <p style="color:#65686b; "><i><b>Save your messages and send them anytime you want</b></i></p>
         </div>
         <div class="app-section">
-          <div class="app-button green" data-target="friend_list">List of user</div>
+          <div class="app-button green" data-target="friend_list">List of Friends</div>
         </div>
          <div class="app-section">
           <div class="app-button blue" data-target="sendemail" id='email_page_button'>Send Email to a New User</div>
@@ -96,10 +96,10 @@
         </div>
 
         <div class="app-section">
-          <ul class="app-list">
-            <li class="app-button">Anas</li>
-            <li class="app-button">Zain</li>
-            <li class="app-button">Areesha</li>
+
+         <p id='no_friend_msg'></p>
+
+          <ul class="app-list" id='friend_list'>
           </ul>
         </div>
         
@@ -131,9 +131,46 @@
 
 
         $(page).find('#send').clickable().on('click' , function(){
-           alert('clicked');
+           
+          var recipientList = new Array();
+
+          if(localStorage.getItem('recipient_list') !== null){
+            recipientList = JSON.parse(localStorage.getItem('recipient_list'));
+          }
+         
+          if($.inArray($('#recipient-email').val() , recipientList) == -1){
+            
+            recipientList.push($('#recipient-email').val()) ;
+            recipientList.sort();
+            localStorage.setItem('recipient_list', JSON.stringify(recipientList));
+            console.log(recipientList);
+          
+          }
+
+
+
+
         });
 
+      });
+
+
+
+
+       App.controller('friend_list', function (page) {
+
+        if(localStorage.getItem('recipient_list') == null){
+            $('#no_friend_msg').textContent = "No Friends ";
+        }
+        else{
+           var recipientList = JSON.parse(localStorage.getItem('recipient_list'));
+           $.each(recipientList , function(index , value){
+             
+             $(page).find('#friend_list').append('<li class="app-button">'+ value +'</li>');
+
+           });
+        }
+        
       });
 
 
