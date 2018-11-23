@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My App</title>
+    <title>Email Client</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="app.min.css">
    
@@ -18,13 +18,13 @@
       </div>
       <div class="app-content">
         <div class="app-section">
-          <p style="color:#6b7477; "><i><b>Save your messages and send them anytime you want</b></i></p>
+          <p style="color:#65686b; "><i><b>Save your messages and send them anytime you want</b></i></p>
         </div>
         <div class="app-section">
-          <div class="app-button green" data-target="sendemail">List of user</div>
+          <div class="app-button green" data-target="friend_list">List of user</div>
         </div>
          <div class="app-section">
-          <div class="app-button blue" data-target="sendemail">Select a new User</div>
+          <div class="app-button blue" data-target="sendemail" id='email_page_button'>Send Email to a New User</div>
         </div>
 
          <div class="app-section">
@@ -38,8 +38,9 @@
    <!-- SEND EMAIL PAGE -->
     <div class="app-page" data-page="sendemail">
       <div class="app-topbar">
-        <div class="app-title">Email Details</div>
+        <div class="app-title"><b><i>Email Details</i></b></div>
         <div class="right app-button" data-back>Done</div>
+        <div class="right app-button left" data-back >Back</div>
       </div>
 
       <div class="app-content">
@@ -60,24 +61,50 @@
     <!--ENTER EMAIL FORM-->
      <div class="app-page" data-page="enteremail">
       <div class="app-topbar">
-        <div class="app-title">Submit Email</div>
-        <div class="left app-button" data-back>Back</div>
+        <div class="app-title"><b><i>Submit Email</i></b></div>
+        <div class="left app-button" data-back>Done</div>
       </div>
 
       <div class="app-content">
 
         <div class="app-section">
-          <h4 style="text-align: center;"><i>Save Your Email here </i></h4>
+          <h4 style="text-align: center; color: #65686b;"><i>Save Your Email here </i></h4>
         </div>
 
         <div class="app-section">
-          <input class="app-input" type="email" id='recipient-email' placeholder="Recipient's Email">
+          <input class="app-input" type="email" id='your_email' placeholder="Your Email">
         </div>
 
         <div class="app-section">
-          <div class="app-button blue">Save</div>
+          <div class="app-button blue" id='save_email'>Save</div>
         </div>
       </div>
+    </div>
+
+
+
+    <!--FRIEND LIST -->
+    <div class="app-page" data-page='friend_list'>
+      <div class="app-topbar">
+        <div class="app-title"><b><i>Friend List</i></b></div>
+        <div class="app-button left" data-back>Back</div>
+      </div>
+
+      <div class="app-content">
+        <div class="app-section">
+          <h4 style="text-align: center; color: #65686b;"><b>Select Recipient</b></h4>
+        </div>
+
+        <div class="app-section">
+          <ul class="app-list">
+            <li class="app-button">Anas</li>
+            <li class="app-button">Zain</li>
+            <li class="app-button">Areesha</li>
+          </ul>
+        </div>
+        
+      </div>
+
     </div>
 
 
@@ -85,14 +112,46 @@
     <script src="app.min.js"></script>
     <script>
       App.controller('home', function (page) {
-        // put stuff here
+
+        $(page).find("#email_page_button").clickable().on('click' , function(){
+            
+                 if(localStorage.getItem('sender_email') === null){
+                  alert('Please Submit Your Email First');
+                 }
+
+        });
+        
       });
 
       App.controller('sendemail', function (page) {
+
+
         $(page).find('#send').clickable().on('click' , function(){
            alert('clicked');
         });
 
+      });
+
+       App.controller('enteremail', function (page) {
+        
+        $(page).find('#save_email').clickable().on('click', function(){
+         
+           if($(page).find('#your_email').val() == ''){
+             alert('Please Enter Input');
+           }
+           else{
+            localStorage.setItem('sender_email' , $('#your_email').val());
+            alert('Your Email is saved');
+           }
+
+
+           if(localStorage.getItem('sender_email') !== null){
+            $('#sender_email').val(localStorage.getItem('sender_email'));
+           }
+
+        });
+
+        
       });
 
       try {
