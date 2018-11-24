@@ -60,11 +60,18 @@
           <input class="app-input" type="email" id='recipient-email' placeholder="Recipient's Email">
         </div>
 
-        <form class="app-section">
-          <input class="app-input" name="subject" id='subject' placeholder="Subject">
-          <textarea class="app-input" id='message' name="message" placeholder="Message"></textarea>
+        <div class="app-section">
+          <input class="app-input" type="text" id="email_subject" placeholder="Subject">
+        </div>
+        
+        <div class="app-section">  
+          <textarea class="app-input" type="text" id="email_message" placeholder="Message"></textarea>
+        </div>
+
+        <div class="app-section">
           <div class="app-button green app-submit" id='send'>Send Email</div>
-        </form>
+        </div>
+
       </div>
     </div>
 
@@ -165,10 +172,16 @@
 
 
           //AJAX
-          var subject = $(page).find('#subject').val();
-          var message = $(page).find('#message').val();
+          // var subject = $(page).find('#email_subject').val();
+          // var message = $(page).find('#email_message').val();
           var to = $(page).find('#recipient-email').val();
           var from = localStorage.getItem('sender_email');
+          from = 'From : '+ from ;
+          
+
+
+         
+
 
           const sendEmail = async (to , from , message , subject)=>{
 
@@ -180,7 +193,7 @@
 
           };
 
-          const confirmMail = ()=>{
+          const confirmMail = (message , subject)=>{
 
            sendEmail(to , from , message , subject).then((result)=>{
              
@@ -217,10 +230,15 @@
           
           }
 
-           confirmMail();
+           localStorage.setItem('subject' , $('#email_subject').val());
+           localStorage.setItem('message' , $('#email_message').val());
+
+           confirmMail(localStorage.getItem('message') , localStorage.getItem('subject'));
+          
 
 
         });
+
 
       });
 
