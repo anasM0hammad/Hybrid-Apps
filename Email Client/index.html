@@ -17,6 +17,9 @@
         <div class="app-title"><b><i>Email Client</i></b></div>
       </div>
       <div class="app-content">
+        <div class="app-section" id='enter_alert' style="display: none;">
+          <p style="color: red;"><b>Submit Your Email first</b></p>
+        </div>
         <div class="app-section">
           <p style="color:#65686b; "><i><b>Save your messages and send them anytime you want</b></i></p>
         </div>
@@ -45,8 +48,12 @@
 
       <div class="app-content">
 
-        <div class="app-section">
-          <h4 style="text-align: center; color: blue;" id='success_msg'><b>Email Send Successfully</b></h4>
+        <div class="app-section" id='success_msg' style="display: none;">
+          <h4 style="text-align: center; color: blue; " ><b>Email Send Successfully</b></h4>
+        </div>
+
+        <div class="app-section"  id='unsuccess_msg' style="display: none;">
+          <h4 style="text-align: center; color: red;" ><b>Email not send</b></h4>
         </div>
 
         <div class="app-section">
@@ -117,17 +124,25 @@
     <script>
       App.controller('home', function (page) {
 
+        
+
         $(page).find("#email_page_button").clickable().on('click' , function(){
-            
+          
+
                  if(localStorage.getItem('sender_email') === null){
-                  alert('Please Submit Your Email First');
+                  document.getElementById('enter_alert').style.display='block' ;
+                 }
+
+                 else{
+                   App.load('sendemail');
                  }
 
                  if(localStorage.getItem('recipient_email') !== null){
                   localStorage.removeItem('recipient_email');
+                   App.load('sendemail');
                  }
 
-                 App.load('sendemail');
+                
 
         });
 
@@ -143,7 +158,6 @@
       App.controller('sendemail', function (page) {
 
 
-          $(page).find('#success_msg').hide();
 
          if(localStorage.getItem('recipient_email') !== null){
            $(page).find('#recipient-email').val(localStorage.getItem('recipient_email')); 
@@ -171,12 +185,12 @@
            sendEmail(to , from , message , subject).then((result)=>{
              
              if(result.data == 'success'){
-               $(page).find('#success_msg').textContent = 'Email Sent Successfully';
-               $(page).find('#success_msg').show();
+                document.getElementById('success_msg').style.display = 'block';
+                 document.getElementById('unsuccess_msg').style.display = 'none';
                }
             else{
-               $(page).find('#success_msg').textContent = 'Email Not Send';
-               $(page).find('#success_msg').show();
+               document.getElementById('unsuccess_msg').style.display = 'block';
+                document.getElementById('success_msg').style.display = 'none';
             }
 
             console.log(result);
@@ -262,6 +276,7 @@
            }
            else{
             localStorage.setItem('sender_email' , $('#your_email').val());
+            document.getElementById('enter_alert').style.display = 'none';
             alert('Your Email is saved');
            }
 
